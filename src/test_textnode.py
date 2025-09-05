@@ -30,11 +30,11 @@ class TestTextNode(unittest.TestCase):
 
     def test_repr(self):
         node = TextNode("This is a text node", TextType.BOLD)
-        self.assertEqual(repr(node), 'TextNode("This is a text node", bold, None)')
+        self.assertEqual(repr(node), "TextNode(test='This is a text node', texttype=<TextType.BOLD: 'bold'>, url=None)")
 
     def test_repr_with_url(self):
         node = TextNode("This is a link", TextType.LINK, "http://example.com")
-        self.assertEqual(repr(node), 'TextNode("This is a link", link, http://example.com)')
+        self.assertEqual(repr(node), "TextNode(test='This is a link', texttype=<TextType.LINK: 'link'>, url='http://example.com')")
 
 if __name__ == "__main__":
     unittest.main()
