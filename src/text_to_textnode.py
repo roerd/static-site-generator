@@ -10,6 +10,7 @@ def _split_node_delimiter(old_node: TextNode, delimiter: str, new_text_type: Tex
         return (
             TextNode(text, text_type)
             for text, text_type in zip(texts, cycle([TextType.TEXT, new_text_type]))
+            if text
         )
     else:
         return [old_node]

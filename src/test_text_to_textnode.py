@@ -19,9 +19,7 @@ class TestSplitNodesDelimiter(unittest.TestCase):
         node = TextNode("`code block`", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
         self.assertEqual(new_nodes, [
-            TextNode("", TextType.TEXT),
             TextNode("code block", TextType.CODE),
-            TextNode("", TextType.TEXT),
         ])
 
     def test_text_double_code(self):
