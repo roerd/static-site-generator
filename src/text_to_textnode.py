@@ -1,3 +1,4 @@
+import re
 from itertools import chain, cycle
 from typing import Iterable
 
@@ -23,3 +24,13 @@ def split_nodes_delimiter(old_nodes: Iterable[TextNode], delimiter: str, text_ty
     )
 
     return list(new_nodes)
+
+
+def extract_markdown_images(text):
+    matches = re.findall(r"!\[(.*?)]\((.*?)\)", text)
+    return matches
+
+
+def extract_markdown_links(text):
+    matches = re.findall(r"\[(.*?)]\((.*?)\)", text)
+    return matches
