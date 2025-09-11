@@ -20,6 +20,13 @@ class TestBlockToBlockType(unittest.TestCase):
         bt = block_to_block_type("```python```")
         self.assertEqual(bt.value, "code")
 
+    def test_code_multiline(self):
+        bt = block_to_block_type("""```
+This is text that _should_ remain
+the **same** even with inline stuff
+```""")
+        self.assertEqual(bt.value, "code")
+
     def test_quote(self):
         bt = block_to_block_type("> This is a quote")
         self.assertEqual(bt.value, "quote")

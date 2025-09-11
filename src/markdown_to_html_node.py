@@ -17,7 +17,9 @@ def block_to_node(block: str) -> HTMLNode:
     block_type = block_to_block_type(block)
     match block_type:
         case BlockType.PARAGRAPH:
-            children = text_to_children(block)
+            lines = block.splitlines()
+            text = " ".join(lines)
+            children = text_to_children(text)
             return ParentNode(tag="p", children=children)
         case BlockType.HEADING:
             matches = re.match(r"(#+) (.*)", block)
@@ -26,19 +28,19 @@ def block_to_node(block: str) -> HTMLNode:
             children = text_to_children(text)
             return ParentNode(tag=f"h{level}", children=children)
         case BlockType.CODE:
-            matches = re.match(r"```(.*)```", block)
-            text = matches[1]
+            matches = re.match(r"```((.|\n)*)```", block)
+            text = matches[1].lstrip()
             text_node = TextNode(text=text, text_type=TextType.TEXT)
             html_node = text_node.to_html_node()
             child = ParentNode(tag="code", children=[html_node])
             return ParentNode(tag="pre", children=[child])
         case BlockType.QUOTE:
-            lines = block.split("\n")
-            text = "\n".join(line[1:] for line in lines)
+            lines = block.splitlines()
+            text = " ".join(line[1:] for line in lines)
             child = markdown_to_html_node(text)
             return ParentNode(tag="quote", children=[child])
         case BlockType.UNORDERED_LIST:
-            lines = block.split("\n")
+            lines = block.splitlines()
             line_texts = [line[2:] for line in lines]
             line_children = [text_to_children(text) for text in line_texts]
             list_items = [
@@ -47,7 +49,7 @@ def block_to_node(block: str) -> HTMLNode:
             ]
             return ParentNode(tag="ul", children=list_items)
         case BlockType.ORDERED_LIST:
-            lines = block.split("\n")
+            lines = block.splitlines()
             line_texts = [re.sub(r"\d+. ", "", line) for line in lines]
             line_children = [text_to_children(text) for text in line_texts]
             list_items = [

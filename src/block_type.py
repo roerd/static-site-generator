@@ -15,13 +15,13 @@ class BlockType(Enum):
 def block_to_block_type(block: str) -> BlockType:
     if re.match(r"#{1,6} ", block):
         return BlockType.HEADING
-    elif re.fullmatch(r"```.*```", block):
+    elif re.fullmatch(r"```(.|\n)*```", block):
         return BlockType.CODE
-    elif all(re.match(r">", line) for line in block.split("\n")):
+    elif all(re.match(r">", line) for line in block.splitlines()):
         return BlockType.QUOTE
-    elif all(re.match(r"- ", line) for line in block.split("\n")):
+    elif all(re.match(r"- ", line) for line in block.splitlines()):
         return BlockType.UNORDERED_LIST
-    elif all(re.match(r"\d+. ", line) for line in block.split("\n")):
+    elif all(re.match(r"\d+. ", line) for line in block.splitlines()):
         return BlockType.ORDERED_LIST
     else:
         return BlockType.PARAGRAPH
