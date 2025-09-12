@@ -36,6 +36,19 @@ the **same** even with inline stuff
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
 
+    def test_unordered_list(self):
+        md = """
+- **bold**
+- _italic_
+- `code`
+"""
+        node = markdown_to_html_node(md)
+        html = node.to_html()
+        self.assertEqual(
+            html,
+            "<div><ul><li><b>bold</b></li><li><i>italic</i></li><li><code>code</code></li></ul></div>",
+        )
+
 
 if __name__ == '__main__':
     unittest.main()
