@@ -36,9 +36,9 @@ def block_to_node(block: str) -> HTMLNode:
             return ParentNode(tag="pre", children=[child])
         case BlockType.QUOTE:
             lines = block.splitlines()
-            text = " ".join(line[1:] for line in lines)
-            child = markdown_to_html_node(text)
-            return ParentNode(tag="quote", children=[child])
+            text = " ".join(line[1:].strip() for line in lines)
+            children = text_to_children(text)
+            return ParentNode(tag="blockquote", children=children)
         case BlockType.UNORDERED_LIST:
             lines = block.splitlines()
             line_texts = [line[2:] for line in lines]
