@@ -1,4 +1,5 @@
 import re
+from os import PathLike
 from pathlib import Path
 
 from markdown_to_html_node import markdown_to_html_node
@@ -11,7 +12,11 @@ def extract_title(markdown: str) -> str:
     return matches[1].strip()
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(
+        from_path: str | PathLike,
+        template_path: str | PathLike,
+        dest_path: str | PathLike
+) -> None:
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     markdown = Path(from_path).read_text()
