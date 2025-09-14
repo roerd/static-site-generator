@@ -11,8 +11,9 @@ def clean_directory(dst: Path):
     for dirpath, _, filenames in dst.walk(top_down=False):
         for filename in filenames:
             (dirpath / filename).unlink()
-            if dirpath != dst:
-                dirpath.rmdir()
+
+        if dirpath != dst:
+            dirpath.rmdir()
 
 
 def copy_directory(src: str | PathLike[str], dst: str | PathLike[str]) -> None:
