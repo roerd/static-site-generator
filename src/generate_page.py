@@ -15,7 +15,8 @@ def extract_title(markdown: str) -> str:
 def generate_page(
         from_path: str | PathLike,
         template_path: str | PathLike,
-        dest_path: str | PathLike
+        dest_path: str | PathLike,
+        basepath: str
 ) -> None:
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
@@ -28,6 +29,9 @@ def generate_page(
 
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", html_str)
+
+    template = template.replace('href="/', f'href="{basepath}')
+    template = template.replace('src="/', f'src="{basepath}')
 
     dest_path = Path(dest_path)
     if not dest_path.parent.exists():
